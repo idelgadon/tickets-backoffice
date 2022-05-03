@@ -1,0 +1,46 @@
+<div class="card">
+	<div class="inline-card">
+		<h2>Ticket list</h2>
+	</div>
+	<div *ngIf="loading; then spinner else table"></div>
+
+	<ng-template #spinner>
+		<div class="spiner-container">
+			<p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="3"></p-progressSpinner>
+		</div>
+	</ng-template>
+
+	<ng-template #table>
+		<p-table [value]="tickets" (sortFunction)="customSort($event)" [customSort]="true" styleClass="p-datatable-striped"
+			[paginator]="true" [rows]="10" [showCurrentPageReport]="true" dataKey="event" responsiveLayout="scroll">
+			<ng-template pTemplate="header">
+				<tr>
+					<th *ngFor="let col of cols" pSortableColumn="{{col.field}}">
+						{{col.header}}
+					</th>
+					<th></th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-ticket>
+				<tr>
+					<td *ngFor="let col of cols">
+						<span class="count" *ngIf="isBool(ticket[col.field]); then boolean else content">
+						</span>
+						<ng-template #content>{{ticket[col.field]}}</ng-template>
+						<ng-template #boolean>
+							<mat-slide-toggle checked={{ticket[col.field]}} id={{ticket.uuid}} (change)="setSold($event)">
+							</mat-slide-toggle>
+						</ng-template>
+					</td>
+					<td>
+						<button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="confirmDeleteTicket(ticket)"></button>
+					</td>
+				</tr>
+				
+			</ng-template>
+
+		</p-table>
+	</ng-template>
+	
+</div>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

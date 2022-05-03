@@ -1,0 +1,29 @@
+<div class="card">
+	<div class="inline-card">
+		<h2>Create new ticket</h2>
+	</div>
+	
+	<form>
+		<div>
+			<h4>Event</h4>
+			<input type="text" name="event" pInputText [(ngModel)]="event" (change)="updateFilled()"/>
+		</div>
+		<div>
+			<h4>Venue</h4>
+			<input type="text" name="venue" pInputText [(ngModel)]="venue" (change)="updateFilled()"/>
+		</div>
+		<div>
+			<h4>Price</h4>
+			<input type="number" name="price" pInputText [(ngModel)]="price" (change)="updateFilled()"/>
+		</div>
+		<div>
+			<h4>Sold out</h4>
+			<mat-slide-toggle (change)="setChecked($event)">
+			</mat-slide-toggle>
+		</div>
+
+		<p-button label="Create" icon="pi pi-save" [disabled]="!allFilled" (onClick)="saveTicket()"></p-button>
+	</form>
+
+	
+</div>

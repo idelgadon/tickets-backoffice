@@ -1,0 +1,24 @@
+<header id="main">
+	<nav>
+		<input type="checkbox" id="nav-check">
+		<div class="nav-header">
+			<div class="nav-title">
+				BackOffice Tickets
+			</div>
+		</div>
+		<div class="nav-btn">
+			<label for="nav-check">
+				<span></span>
+				<span></span>
+				<span></span>
+			</label>
+		</div>
+		<div class="nav-links">
+			<a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Ticket list</a>
+			<a routerLink="/new" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">New ticket</a>
+		</div>
+	</nav>
+</header>
+<main>
+	<router-outlet></router-outlet>
+</main>

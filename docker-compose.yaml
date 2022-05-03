@@ -1,0 +1,51 @@
+version: '3.8'
+
+services: 
+  db:
+    image: mysql
+    restart: unless-stopped
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "bo_tickets"
+    ports:
+      - "33060:3306"
+    volumes: 
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+    networks:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.backend
+    container_name: tickets-backend
+    ports:
+      - 3000:3000
+    links:
+      - db
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.frontend
+    container_name: tickets-frontend
+    ports:
+      - 4200:4200
+    links:
+      - backend
+    networks:
+      - frontend
+      - backend
+
+volumes: 
+  db-config:
+  db-data:
+
+networks:
+  frontend:
+  backend:
